@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Merosa';
+  src: url('/assets/fonts/merosa-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('/assets/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Brand color tokens */
+  --baktra-rojo: #852c26;      /* Bordó / Pantone 1815 CP */
+  --baktra-turquesa: #5ca4b2;  /* Pantone 2219 C */
+  --baktra-marron: #b08c74;    /* Pantone 16-1323 TPG Macaroon */
+  --baktra-blanco: #ffffff;
+
+  /* Color-mix scales - No neutral grays or #000 */
+  --rojo-90: color-mix(in srgb, #852c26 90%, white);
+  --rojo-80: color-mix(in srgb, #852c26 80%, white);
+  --rojo-60: color-mix(in srgb, #852c26 60%, white);
+  --rojo-40: color-mix(in srgb, #852c26 40%, white);
+  --rojo-20: color-mix(in srgb, #852c26 20%, white);
+  --rojo-10: color-mix(in srgb, #852c26 10%, white);
+  --rojo-5:  color-mix(in srgb, #852c26 5%, white);
+
+  --marron-90: color-mix(in srgb, #b08c74 90%, white);
+  --marron-70: color-mix(in srgb, #b08c74 70%, white);
+  --marron-50: color-mix(in srgb, #b08c74 50%, white);
+  --marron-30: color-mix(in srgb, #b08c74 30%, white);
+  --marron-15: color-mix(in srgb, #b08c74 15%, white);
+  --marron-8:  color-mix(in srgb, #b08c74 8%, white);
+
+  --turquesa-90: color-mix(in srgb, #5ca4b2 90%, white);
+  --turquesa-70: color-mix(in srgb, #5ca4b2 70%, white);
+  --turquesa-50: color-mix(in srgb, #5ca4b2 50%, white);
+  --turquesa-30: color-mix(in srgb, #5ca4b2 30%, white);
+  --turquesa-15: color-mix(in srgb, #5ca4b2 15%, white);
+
+  /* Official Gradients */
+  --gradiente-insignia: linear-gradient(180deg, #852c26 0%, #852c26 35%, #5ca4b2 100%);
+  --gradiente-bordo-turquesa: linear-gradient(180deg, #852c26 0%, #5ca4b2 100%);
+  --gradiente-marron-bordo: linear-gradient(180deg, #b08c74 0%, #852c26 100%);
+  --gradiente-turquesa-marron: linear-gradient(180deg, #5ca4b2 0%, #b08c74 100%);
+
+  /* Minimum sizes from manual graphics (approved by user) */
+  --logo-min: 190px;
+  --isologotipo-min: 114px;
+  --isologo-min: 38px;
+
+  /* Font variables */
+  --font-merosa: 'Merosa', Georgia, serif;
+  --font-bricolage: 'Bricolage Grotesque', system-ui, sans-serif;
+
+  /* Fluid typography */
+  --text-display: clamp(3.2rem, 9.5vw, 8.5rem);
+  --text-h1: clamp(2.3rem, 5.5vw, 5rem);
+  --text-h2: clamp(1.8rem, 3.8vw, 3.2rem);
+  --text-h3: clamp(1.35rem, 2.2vw, 2.1rem);
+  --text-body: clamp(0.98rem, 1.05vw, 1.125rem);
+
+  /* Curves */
+  --ease-baktra: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: #ffffff;
+  color: var(--baktra-rojo);
+  font-family: var(--font-bricolage);
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Headings: Merosa Bold Only */
+h1, h2, h3, .font-serif {
+  font-family: var(--font-merosa);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+
+h1 { font-size: var(--text-h1); line-height: 1.05; }
+h2 { font-size: var(--text-h2); line-height: 1.1; }
+h3 { font-size: var(--text-h3); line-height: 1.2; }
+
+/* Selection */
+::selection {
+  background-color: var(--baktra-turquesa);
+  color: #ffffff;
+}
+
+/* Accessible focus indicators with turquoise ring */
+:focus-visible {
+  outline: 2px solid var(--baktra-turquesa);
+  outline-offset: 3px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
