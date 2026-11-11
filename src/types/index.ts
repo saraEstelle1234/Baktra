@@ -5,6 +5,20 @@ export interface ProductVariant {
   stock: number;
 }
 
+export interface ConvertibleMode {
+  name: string; // ej: "Chaleco" | "Bolso"
+  label: string; // ej: "Modo Chaleco" | "Modo Bolso"
+  image: string;
+  backImage?: string;
+  description?: string;
+}
+
+export interface ConvertibleData {
+  modeA: ConvertibleMode;
+  modeB: ConvertibleMode;
+  transformationTip: string;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -23,6 +37,8 @@ export interface Product {
   careInstructions: string[];
   isReversible: boolean;
   isModular: boolean;
+  isConvertible?: boolean; // Prenda con doble funcionalidad (ej: Chaleco <-> Bolso)
+  convertibleData?: ConvertibleData;
   sideAImage: string;
   sideBImage?: string; // Para indumentaria reversible (Lado A / Lado B)
   gallery: string[];
@@ -37,6 +53,7 @@ export interface CartItem {
   selectedVariant: ProductVariant;
   quantity: number;
   activeSide?: 'A' | 'B';
+  activeMode?: string;
 }
 
 export interface ShippingOption {

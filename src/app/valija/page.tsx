@@ -31,9 +31,9 @@ export default function ValijaBuilderPage() {
   const totalVolumeLitres = selectedProducts.reduce((sum, p) => sum + p.volumeLitres, 0);
   const totalCost = selectedProducts.reduce((sum, p) => sum + p.price, 0);
 
-  // Estimador de combinaciones: piezas reversibles duplican sus posibilidades
+  // Estimador de combinaciones: piezas reversibles y convertibles duplican sus posibilidades
   const possibleLooks = Math.max(
-    selectedProducts.length * 2 + (selectedProducts.some((p) => p.isReversible) ? 4 : 0),
+    selectedProducts.length * 2 + (selectedProducts.some((p) => p.isReversible || p.isConvertible) ? 4 : 0),
     selectedProducts.length
   );
 
@@ -246,7 +246,12 @@ export default function ValijaBuilderPage() {
                       <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 bg-baktra-rojo text-white rounded">
                         {product.volumeLitres} L
                       </span>
-                      {product.isReversible && (
+                      {product.isConvertible && (
+                        <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 bg-baktra-turquesa text-white rounded">
+                          Chaleco ⇄ Bolso
+                        </span>
+                      )}
+                      {product.isReversible && !product.isConvertible && (
                         <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 bg-baktra-turquesa text-white rounded">
                           2 en 1
                         </span>

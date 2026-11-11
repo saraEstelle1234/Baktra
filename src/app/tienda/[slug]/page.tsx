@@ -58,13 +58,16 @@ export default function ProductDetailPage() {
         {/* Fila Principal: Visor Flip + Selector de Compra */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* Columna Izquierda: Visor Flip Lado A / Lado B */}
+          {/* Columna Izquierda: Visor Flip Lado A / Lado B / Modo Convertible */}
           <div className="lg:col-span-7 space-y-4">
             <FlipImage
               sideAImage={product.sideAImage}
               sideBImage={product.sideBImage}
               alt={product.name}
               isReversible={product.isReversible}
+              isConvertible={product.isConvertible}
+              convertibleData={product.convertibleData}
+              gallery={product.gallery}
               className="w-full aspect-[4/5] shadow-sm"
             />
 
@@ -77,8 +80,20 @@ export default function ProductDetailPage() {
               </div>
               <div className="p-3 bg-baktra-marron/20 rounded border border-baktra-marron/35 text-baktra-rojo">
                 <RefreshCw className="w-4 h-4 mx-auto mb-1 text-baktra-marron" />
-                <span className="font-semibold block">{product.isReversible ? 'Reversible 2 en 1' : 'Prenda Modular'}</span>
-                <span className="text-[10px] text-baktra-rojo/80">Doble faz de viaje</span>
+                <span className="font-semibold block">
+                  {product.isConvertible
+                    ? 'Convertible 2 en 1'
+                    : product.isReversible
+                    ? 'Reversible 2 en 1'
+                    : 'Prenda Modular'}
+                </span>
+                <span className="text-[10px] text-baktra-rojo/80">
+                  {product.isConvertible
+                    ? 'Chaleco ⇄ Bolso'
+                    : product.isReversible
+                    ? 'Doble faz de viaje'
+                    : 'Slow Fashion'}
+                </span>
               </div>
               <div className="p-3 bg-baktra-turquesa/20 rounded border border-baktra-turquesa/35 text-baktra-rojo">
                 <Sparkles className="w-4 h-4 mx-auto mb-1 text-baktra-turquesa" />
@@ -152,8 +167,45 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
+            {/* Selector para Prenda Convertible (Chaleco ⇄ Bolso) */}
+            {product.isConvertible && product.convertibleData && (
+              <div className="space-y-2 text-xs p-4 bg-baktra-marron/10 rounded-lg border border-baktra-marron/25">
+                <span className="font-semibold uppercase tracking-wider text-baktra-rojo block flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-baktra-turquesa" />
+                  Configuración inicial de uso
+                </span>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSide('A')}
+                    className={`flex-1 py-2.5 text-xs font-semibold uppercase rounded border transition-all ${
+                      selectedSide === 'A'
+                        ? 'border-baktra-rojo bg-baktra-rojo text-white font-bold shadow'
+                        : 'border-baktra-rojo/20 bg-white text-baktra-rojo hover:border-baktra-rojo'
+                    }`}
+                  >
+                    Usar como {product.convertibleData.modeA.name}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSide('B')}
+                    className={`flex-1 py-2.5 text-xs font-semibold uppercase rounded border transition-all ${
+                      selectedSide === 'B'
+                        ? 'border-baktra-turquesa bg-baktra-turquesa text-white font-bold shadow'
+                        : 'border-baktra-rojo/20 bg-white text-baktra-rojo hover:border-baktra-rojo'
+                    }`}
+                  >
+                    Usar como {product.convertibleData.modeB.name}
+                  </button>
+                </div>
+                <p className="text-[11px] text-baktra-rojo/70 font-light mt-1">
+                  * Ambas funciones vienen integradas en la misma pieza. Podés alternar libremente en cualquier momento.
+                </p>
+              </div>
+            )}
+
             {/* Selector de Lado si es Reversible */}
-            {product.isReversible && (
+            {product.isReversible && !product.isConvertible && (
               <div className="space-y-2 text-xs">
                 <span className="font-semibold uppercase tracking-wider text-baktra-rojo block">
                   Reverso inicial en valija

@@ -4,11 +4,12 @@ import React, { useState, useMemo } from 'react';
 import { PRODUCTS } from '@/data/products';
 import { ProductCard } from '@/components/shop/ProductCard';
 import { Marquee } from '@/components/brand/Marquee';
-import { Filter, SlidersHorizontal, RotateCcw } from 'lucide-react';
+import { Filter, SlidersHorizontal, RotateCcw, Sparkles } from 'lucide-react';
 
 export default function TiendaPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
   const [selectedCollection, setSelectedCollection] = useState<string>('todas');
+  const [onlyConvertible, setOnlyConvertible] = useState<boolean>(false);
   const [onlyReversible, setOnlyReversible] = useState<boolean>(false);
   const [onlyModular, setOnlyModular] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
@@ -22,6 +23,10 @@ export default function TiendaPage() {
 
     if (selectedCollection !== 'todas') {
       list = list.filter((p) => p.collection === selectedCollection);
+    }
+
+    if (onlyConvertible) {
+      list = list.filter((p) => p.isConvertible);
     }
 
     if (onlyReversible) {
@@ -39,11 +44,12 @@ export default function TiendaPage() {
     }
 
     return list;
-  }, [selectedCategory, selectedCollection, onlyReversible, onlyModular, sortBy]);
+  }, [selectedCategory, selectedCollection, onlyConvertible, onlyReversible, onlyModular, sortBy]);
 
   const resetFilters = () => {
     setSelectedCategory('todos');
     setSelectedCollection('todas');
+    setOnlyConvertible(false);
     setOnlyReversible(false);
     setOnlyModular(false);
     setSortBy('featured');
@@ -51,12 +57,10 @@ export default function TiendaPage() {
 
   const categories = [
     { id: 'todos', label: 'Todo el Archivo' },
-    { id: 'abrigos', label: 'Abrigos & Ponchos' },
-    { id: 'faldas', label: 'Faldas Modulares' },
-    { id: 'vestidos', label: 'Vestidos Nómada' },
-    { id: 'camisas', label: 'Camisas de Lino' },
-    { id: 'pantalones', label: 'Pantalones Nómada' },
-    { id: 'accesorios', label: 'Accesorios & Cuellos' },
+    { id: 'abrigos', label: 'Chalecos & Abrigos' },
+    { id: 'vestidos', label: 'Vestidos' },
+    { id: 'faldas', label: 'Faldas' },
+    { id: 'camisas', label: 'Tops de Autor' },
   ];
 
   return (
@@ -101,16 +105,31 @@ export default function TiendaPage() {
             ))}
           </div>
 
-          {/* Filtros de Reversible, Modular y Sort */}
+          {/* Filtros de Convertible, Reversible, Modular y Sort */}
           <div className="flex flex-wrap items-center gap-4 text-xs">
-            <label className="flex items-center gap-2 cursor-pointer text-baktra-rojo select-none">
+            <label className="flex items-center gap-1.5 cursor-pointer text-baktra-rojo select-none bg-baktra-rojo/5 px-2.5 py-1 rounded">
+              <input
+                type="checkbox"
+                checked={onlyConvertible}
+                onChange={(e) => setOnlyConvertible(e.target.checked)}
+                className="rounded accent-baktra-rojo"
+              />
+              <span className="font-semibold flex items-center gap-1 text-baktra-rojo">
+                <Sparkles className="w-3.5 h-3.5 text-baktra-turquesa" />
+                Convertibles (2 en 1)
+              </span>
+            </label>
+
+            <label className="flex items-center gap-1.5 cursor-pointer text-baktra-rojo select-none bg-baktra-turquesa/10 px-2.5 py-1 rounded">
               <input
                 type="checkbox"
                 checked={onlyReversible}
                 onChange={(e) => setOnlyReversible(e.target.checked)}
                 className="rounded accent-baktra-turquesa"
               />
-              <span className="font-semibold">Solo reversibles</span>
+              <span className="font-semibold text-baktra-rojo">
+                Reversibles
+              </span>
             </label>
 
             <label className="flex items-center gap-2 cursor-pointer text-baktra-rojo select-none">
@@ -120,7 +139,7 @@ export default function TiendaPage() {
                 onChange={(e) => setOnlyModular(e.target.checked)}
                 className="rounded accent-baktra-turquesa"
               />
-              <span className="font-semibold">Solo modulares</span>
+              <span className="font-semibold">Modulares</span>
             </label>
 
             <div className="flex items-center gap-2 pl-2 border-l border-baktra-rojo/20">
@@ -141,7 +160,7 @@ export default function TiendaPage() {
         {/* Resumen de resultados */}
         <div className="flex items-center justify-between py-6 text-xs text-baktra-marron">
           <span>Mostrando {filteredProducts.length} {filteredProducts.length === 1 ? 'prenda' : 'prendas'}</span>
-          {(selectedCategory !== 'todos' || onlyReversible || onlyModular || sortBy !== 'featured') && (
+          {(selectedCategory !== 'todos' || onlyConvertible || onlyReversible || onlyModular || sortBy !== 'featured') && (
             <button
               onClick={resetFilters}
               className="flex items-center gap-1.5 text-baktra-rojo hover:text-baktra-turquesa transition-colors underline"

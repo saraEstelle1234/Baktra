@@ -10,7 +10,7 @@ import { PRODUCTS, TRAVEL_STORIES } from '@/data/products';
 import { ArrowRight, Compass, ShieldCheck, Sparkles, Feather } from 'lucide-react';
 
 export default function HomePage() {
-  const featuredProducts = PRODUCTS.slice(0, 4);
+  const featuredProducts = PRODUCTS;
   const featuredStories = TRAVEL_STORIES.slice(0, 2);
 
   return (
@@ -126,7 +126,7 @@ export default function HomePage() {
         </div>
 
         {/* Grilla Editorial de Productos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -175,27 +175,27 @@ export default function HomePage() {
             <div className="flex items-center justify-between border-b border-baktra-rojo/10 pb-4">
               <span className="font-serif font-bold text-base text-baktra-rojo">Ejemplo de Set Rector</span>
               <span className="text-[10px] uppercase font-bold text-baktra-turquesa bg-baktra-turquesa/10 px-2 py-1 rounded">
-                Volumen: 7.8 L
+                Volumen: 3.4 L
               </span>
             </div>
 
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs p-2 bg-baktra-rojo/5 rounded">
-                <span className="font-medium">1. Campera Rectora Reversible Balkh</span>
-                <span className="text-baktra-marron">4.2 Litros</span>
+                <span className="font-medium">1. Chaleco Bolso Convertible (2 en 1)</span>
+                <span className="text-baktra-marron">1.2 Litros</span>
               </div>
               <div className="flex items-center justify-between text-xs p-2 bg-baktra-rojo/5 rounded">
-                <span className="font-medium">2. Falda Superpuesta Tillya Tepe</span>
-                <span className="text-baktra-marron">2.1 Litros</span>
+                <span className="font-medium">2. Pollera Antílope</span>
+                <span className="text-baktra-marron">1.4 Litros</span>
               </div>
               <div className="flex items-center justify-between text-xs p-2 bg-baktra-rojo/5 rounded">
-                <span className="font-medium">3. Camisa Oversize Oasis de Oxus</span>
-                <span className="text-baktra-marron">1.5 Litros</span>
+                <span className="font-medium">3. Top Mao</span>
+                <span className="text-baktra-marron">0.8 Litros</span>
               </div>
             </div>
 
             <p className="text-[11px] text-baktra-rojo/70 italic border-t border-baktra-rojo/10 pt-3">
-              * Con solo estas 3 prendas contás con 6 configuraciones distintas de abrigo, cuello y reverso para transitar climas cálidos y fríos.
+              * Con solo 3 piezas contás con múltiples configuraciones de abrigo, bolso de hombro, falda y top, ocupando menos de 4 litros en tu valija de cabina.
             </p>
           </div>
         </div>
